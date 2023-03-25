@@ -1,7 +1,7 @@
-#Set working Directory
+------#Set working Directory--------
 setwd("/Users/USER/Desktop/Data_Science/Case_Study")
 
-#install packages
+------#install packages------
 
 install.packages("plyr")
 install.packages("readr")
@@ -11,7 +11,7 @@ install.packages('tidyverse')
 install.packages("lubricate")
 install.packages("hms")
 
-#load Libraries
+------#load Libraries------
 
 library(plyr)
 library(readr)
@@ -22,7 +22,7 @@ library(lubridate)
 library(hms) 
 library(data.table)
 
-#load .csv files between Jan2022-Dec2022
+------#load .csv files between Jan2022-Dec2022------
 Jan22 <- read_csv("202201-divvy-tripdata.csv") 
 Feb22 <- read_csv("202202-divvy-tripdata.csv") 
 Mar22 <- read_csv("202203-divvy-tripdata.csv")
@@ -36,21 +36,21 @@ Oct22 <- read_csv("202210-divvy-tripdata.csv")
 Nov22 <- read_csv("202211-divvy-tripdata.csv") 
 Dec22 <- read_csv("202212-divvy-tripdata.csv") 
 
-#Convert all files to a single data view
+------#Convert all files to a single data view------
 BikeSales <- rbind (Jan22, Feb22, Mar22, Apr22, May22, Jun22, Jul22, Aug22, Sep22, Oct22, Nov22, Dec22)
 
-#convert from tibble to dataframe
+------#convert from tibble to dataframe------
 BikeSalesDf <- as.data.frame(BikeSales)
 
-#Delete all individual files to free up space
+------#Delete all individual files to free up space------
 remove(Jan22, Feb22, Mar22, Apr22, May22, Jun22, Jul22, Aug22, Sep22, Oct22, Nov22, Dec22)
 
-#Clean the data
+------#Clean the data------
 BikeSalesDf <- distinct(BikeSalesDf) #remove duplicate rows
 BikeSalesDf <- BikeSalesDf[!(BikeSalesDf$ride_id < 16),] #since ride_id has a distinct length of 16 so we have to remove the outliers
 BikeSalesDf <- na.omit(BikeSalesDf) #remove rows with NA values
 
-#Add and remove columns
+------#Add and remove columns------
 BikeSalesDf$ride_length <- difftime(BikeSalesDf$ended_at, BikeSalesDf$started_at, units = "mins")#Calculate ride length
 BikeSalesDf$date <- as.Date(BikeSalesDf$started_at) #add date column
 BikeSalesDf$year <- format(as.Date(BikeSalesDf$date), "%Y") #create column for year
@@ -63,7 +63,7 @@ BikeSalesDf$time <- format(as_date(BikeSalesDf$date), "%H:%M:%S") #format time a
 
 BikeSalesDf$hour <- hour(BikeSalesDf$time) #create new column for hour
 
-#create column for different time_of_day: Night, Morning, Afternoon,
+------#create column for different time_of_day: Night, Morning, Afternoon------
 BikeSalesDf <-BikeSalesDf %>% mutate(time_of_day = 
                                        case_when(hour == "0" ~ "Night",
                                                  hour == "1" ~ "Night",
@@ -98,8 +98,8 @@ BikeSalesDf <- BikeSalesDf[!(BikeSalesDf$ride_length <=0),] #Remove 0 and negati
 BikeSalesDf <- BikeSalesDf %>% #remove unnecessary columns
   select(-c(start_station_id, end_station_id,start_lat,start_lng,end_lat,end_lng, time)) 
 
-#view the final data
+------#view the final data------
 head(BikeSalesDf)
 
-#Export as .csv
+------#Export as .csv------
 write.csv(BikeSalesDf, "/Users/USER/Desktop/Data_Science/Case_Study/CleanedBikeSales.csv", row.names = TRUE)
