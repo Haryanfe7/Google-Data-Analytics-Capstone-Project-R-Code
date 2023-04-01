@@ -3,13 +3,13 @@ setwd("/Users/USER/Desktop/Data_Science/Case_Study")
 
 ------#install packages------
 
-install.packages("plyr")
-install.packages("readr")
-install.packages("dplyr")
+install.packages("plyr")  #for data manipulation
+install.packages("readr")  #to read csv files
+install.packages("dplyr")   #for data manipulation
 install.packages('data.table')
-install.packages('tidyverse')
-install.packages("lubricate")
-install.packages("hms")
+install.packages('tidyverse')  
+install.packages("lubricate")  #for data-time columns
+install.packages("hms")     #for time data
 
 ------#load Libraries------
 
