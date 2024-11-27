@@ -90,6 +90,9 @@ The session involves sharing the key findings obtained from the visualizations. 
 Figure 1: Visualizations for Total Rides and Average Ride Lengths for each Member Type
 The visualization above shows each member type total rides and average ride lengths. From the diagram, we can deduce that most riders are member riders. However, while member riders have a higher number of rides, the average ride time of casual riders is significantly higher than annual member riders.
 
+![Uploading Screenshot 2024-11-27 153702.png…]()
+
+
 #### Figure 2:
 
 Figure 2: Visualizations for Total Rides and Average Ride Lengths for each Member and Bike Type
